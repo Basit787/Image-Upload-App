@@ -1,32 +1,30 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Card, CardContent } from "./components/ui/card";
+import { useSignModeContext } from "./context/SignMode.Context";
+import { SignIn } from "./pages/auth/SignIn";
+import { SignUp } from "./pages/auth/SignUp";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+  const { value } = useSignModeContext();
 
+  const AuthRoutes = () => {
+    switch (value) {
+      case 0:
+        return <SignIn />;
+      case 1:
+        return <SignUp />;
+      default:
+        throw new Error("Unknown route found");
+    }
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>Click on the Vite and React logos to learn more</p>
-    </>
+    <section className="flex justify-center items-center min-h-screen">
+      <Card className="md:w-1/3 w-full m-4">
+        <CardContent>
+          <AuthRoutes />
+        </CardContent>
+      </Card>
+    </section>
   );
-}
+};
 
 export default App;
