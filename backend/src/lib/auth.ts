@@ -13,6 +13,8 @@ export const auth = betterAuth({
     enabled: true,
   },
 
+  trustedOrigins: ["*"],
+
   user: {
     changeEmail: {
       enabled: false,

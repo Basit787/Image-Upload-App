@@ -1,4 +1,4 @@
-import SignModeContext from "./SignMode.Context";
+import SignModeContext from "./AuthStepProvider";
 
 const ContextProviders = ({ children }: { children: React.ReactNode }) => {
   return <SignModeContext>{children}</SignModeContext>;

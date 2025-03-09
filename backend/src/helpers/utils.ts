@@ -1,5 +1,5 @@
 export const createKey = (name: string) => {
-  return `${Date.now()}-${name}`;
+  return `${crypto.randomUUID()}-${name}`;
 };
 
 export const getMb = (size: number) => {

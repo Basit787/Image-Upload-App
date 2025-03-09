@@ -1,9 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
+import { TextInput } from "@/components/text-input";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,9 +10,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useSignModeContext } from "@/context/SignMode.Context";
+import { useAuthStep } from "@/context/AuthStepProvider";
+import { signinAPI } from "@/services/auth.api";
+import { queryClient } from "@/services/client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Email should be in proper format" }),
@@ -33,11 +37,31 @@ export function SignIn() {
     },
   });
 
+  const navigate = useNavigate();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["singIn"],
+    mutationFn: async (payload: z.infer<typeof FormSchema>) => {
+      const data = await signinAPI(payload.email, payload.password);
+      console.log(data);
+    },
+    onSuccess: (data) => {
+      console.log("data", data);
+      queryClient.invalidateQueries({ queryKey: ["signIn"] });
+      navigate("/");
+    },
+    onError: (error) => {
+      console.log("error", error);
+
+      toast.error(error.message);
+    },
+  });
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    mutate(data);
   }
 
-  const { change } = useSignModeContext();
+  const { setAuthStep } = useAuthStep();
 
   return (
     <div className="space-y-2">
@@ -51,7 +75,7 @@ export function SignIn() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" {...field} />
+                  <TextInput placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -64,13 +88,19 @@ export function SignIn() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your password" {...field} />
+                  <TextInput
+                    type="password"
+                    placeholder="Enter your password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isPending}>
+            Submit
+          </Button>
         </form>
       </Form>
       <Separator />
@@ -78,7 +108,7 @@ export function SignIn() {
         Dont have any account
         <Button
           className="text-foreground/75 bg-transparent shadow-none hover:bg-transparent cursor-pointer"
-          onClick={() => change(1)}
+          onClick={() => setAuthStep(1)}
         >
           SignUp
         </Button>

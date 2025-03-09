@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 //upload image
 export const imageUpload = async (c: Context) => {
   const user = c.get("user");
+  console.log("upload", user);
 
   try {
     const data = await c.req.parseBody();
@@ -49,9 +50,13 @@ export const imageUpload = async (c: Context) => {
 
 //get all images
 export const getAllImages = async (c: Context) => {
+  const user = c.get("user");
+  console.log("image", user);
   try {
-    const result = await db.select().from(imageTable);
-    if (!result.length) return c.json({ error: "Failed to get images" }, 404);
+    const result = await db
+      .select()
+      .from(imageTable)
+      .where(eq(imageTable.userId, user.id));
 
     for (const obj of result) {
       const url = await s3GetImage(obj.key!);

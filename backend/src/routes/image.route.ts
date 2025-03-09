@@ -8,10 +8,10 @@ export const imageRoute = new Hono();
 
 imageRoute.post(
   "/uploadImage",
-  //   authMiddleware,
+  authMiddleware,
   ImageValidationMiddleware(ImageValidation),
   image.imageUpload
 );
-imageRoute.get("/getAllImages", image.getAllImages);
-imageRoute.get("/getSingleImage/:id", image.getSingleImage);
-imageRoute.delete("/deleteImage/:id", image.deleteImage);
+imageRoute.get("/getAllImages", authMiddleware, image.getAllImages);
+imageRoute.get("/getSingleImage/:id", authMiddleware, image.getSingleImage);
+imageRoute.delete("/deleteImage/:id", authMiddleware, image.deleteImage);
