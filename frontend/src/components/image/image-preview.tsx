@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { useDeleteImageProvider } from "@/context/deleteImage/useDeleteImage";
 import { useViewImageContext } from "@/context/imageView/useImageView";
 import { Download, Trash } from "lucide-react";
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { Lens } from "../magicui/lens";
 
 const ImagePreview = () => {
@@ -61,4 +61,4 @@ const ImagePreview = () => {
   );
 };
 
-export default ImagePreview;
+export default memo(ImagePreview);

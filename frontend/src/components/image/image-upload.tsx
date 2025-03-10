@@ -12,7 +12,7 @@ import { uploadImage } from "@/services/image.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Upload, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -45,7 +45,7 @@ export const FormSchema = z.object({
     ),
 });
 
-export function ImageUpload() {
+const ImageUpload = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
@@ -166,4 +166,6 @@ export function ImageUpload() {
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default ImageUpload;

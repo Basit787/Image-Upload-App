@@ -6,12 +6,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { LogOut, User, type LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router";
-import { ImageUpload } from "./image/image-upload";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card } from "./ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import ImageUpload from "./image/image-upload";
 
 type ProfileOption = {
   text: string;

@@ -1,28 +1,41 @@
-import ErrorPage from "@/error-element";
-import NotFound from "@/not-found";
-import AuthRoutes from "@/pages/auth/AuthRoutes";
-import { ImageGallery } from "@/pages/image/Image";
-import ProfileDetails from "@/pages/profileDetails/ProfileDetails";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { JSX, lazy, Suspense } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router"; // (Fixed: Correct import)
 import ProtectedRoutes from "./protected-routes";
 import PublicRoutes from "./public-route";
+import Loading from "@/components/loading";
+
+const ErrorPage = lazy(() => import("@/error-element"));
+const NotFound = lazy(() => import("@/not-found"));
+const AuthRoutes = lazy(() => import("@/pages/auth/AuthRoutes"));
+const ImageGallery = lazy(() => import("@/pages/image/Image"));
+const ProfileDetails = lazy(
+  () => import("@/pages/profileDetails/ProfileDetails")
+);
+
+const SuspenseWrapper = (
+  Component: React.LazyExoticComponent<() => JSX.Element>
+) => (
+  <Suspense fallback={<Loading />}>
+    <Component />
+  </Suspense>
+);
 
 const routes = createBrowserRouter([
   {
     path: "/auth",
     element: <PublicRoutes />,
-    children: [{ index: true, element: <AuthRoutes /> }],
+    children: [{ index: true, element: SuspenseWrapper(AuthRoutes) }],
   },
   {
     path: "/",
     element: <ProtectedRoutes />,
-    errorElement: <ErrorPage />,
+    errorElement: SuspenseWrapper(ErrorPage),
     children: [
-      { index: true, element: <ImageGallery /> },
-      { path: "profile", element: <ProfileDetails /> },
+      { index: true, element: SuspenseWrapper(ImageGallery) },
+      { path: "profile", element: SuspenseWrapper(ProfileDetails) },
     ],
   },
-  { path: "*", element: <NotFound /> },
+  { path: "*", element: SuspenseWrapper(NotFound) },
 ]);
 
 export const AppRoutes = () => {

@@ -15,7 +15,7 @@ export type ImageType = {
   url: string;
 };
 
-export function ImageGallery() {
+const ImageGallery = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["image"],
     queryFn: () => getAllImages(),
@@ -70,4 +70,6 @@ export function ImageGallery() {
       </div>
     </div>
   );
-}
+};
+
+export default ImageGallery;

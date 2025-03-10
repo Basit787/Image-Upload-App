@@ -30,7 +30,7 @@ const FormSchema = z.object({
     .min(8, { message: "Password length should be min 8 chars" }),
 });
 
-export function SignIn() {
+const SignIn = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -75,6 +75,7 @@ export function SignIn() {
 
   return (
     <div className="space-y-2">
+      <h1 className="text-center py-4 text-xl font-semibold">SignIN</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -124,4 +125,5 @@ export function SignIn() {
       </p>
     </div>
   );
-}
+};
+export default SignIn;

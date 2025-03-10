@@ -12,7 +12,7 @@ import { queryClient } from "@/services/client";
 import { deleteImage } from "@/services/image.api";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useMutation } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { toast } from "sonner";
 
 const DeleteImage = () => {
@@ -61,4 +61,4 @@ const DeleteImage = () => {
   );
 };
 
-export default DeleteImage;
+export default memo(DeleteImage);
