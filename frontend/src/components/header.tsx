@@ -3,15 +3,15 @@ import { signOutApi } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { getUserDetails } from "@/services/user.api";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { LogOut, User, type LucideIcon } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { ImageUpload } from "./image/image-upload";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card } from "./ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import Cookies from "js-cookie";
-import { ImageUpload } from "./image/image-upload";
 
 type ProfileOption = {
   text: string;
@@ -96,9 +96,9 @@ const Header = () => {
                 );
                 if (item.link) {
                   return (
-                    <Link to={item.link} key={item.link}>
+                    <a href={item.link} key={item.link}>
                       <DivItem />
-                    </Link>
+                    </a>
                   );
                 }
                 return <DivItem key={item.link} />;

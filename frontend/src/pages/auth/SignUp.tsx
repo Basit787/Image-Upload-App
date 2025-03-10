@@ -14,16 +14,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useAuthStep } from "@/context/AuthStepProvider";
+import { getValidName } from "@/helper/utils";
 import { signupAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import Cookies from "js-cookie";
-import { getValidName } from "@/helper/utils";
+import { useAuthStep } from "@/context/authStep/useAuthStep";
+import { useCallback } from "react";
 
 const FormSchema = z
   .object({
@@ -50,6 +50,7 @@ export function SignUp() {
   });
 
   const navigate = useNavigate();
+  const { setAuthStep } = useAuthStep();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["signUp"],
@@ -70,11 +71,13 @@ export function SignUp() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    mutate(data);
-  }
+  const onSubmit = useCallback(
+    (data: z.infer<typeof FormSchema>) => {
+      mutate(data);
+    },
+    [mutate]
+  );
 
-  const { setAuthStep } = useAuthStep();
   return (
     <div className="space-y-2">
       <h1 className="text-center py-4 text-xl font-semibold">SignUp</h1>
@@ -150,7 +153,7 @@ export function SignUp() {
         Already had an account
         <Button
           className="text-foreground/75 bg-transparent shadow-none hover:bg-transparent cursor-pointer"
-          onClick={() => setAuthStep(0)}
+          onClick={useCallback(() => setAuthStep(0), [setAuthStep])}
         >
           SignIn
         </Button>

@@ -7,8 +7,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { queryClient } from "@/services/client";
+import { uploadImage } from "@/services/image.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Upload, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import {
   Form,
@@ -19,12 +25,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { useState, useEffect } from "react";
-import { Upload, X } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
-import { uploadImage } from "@/services/image.api";
-import { queryClient } from "@/services/client";
-import { toast } from "sonner";
 
 export const FormSchema = z.object({
   image: z
@@ -74,11 +74,14 @@ export function ImageUpload() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    const formData = new FormData();
-    formData.append("image", data.image);
-    mutate(formData);
-  }
+  const onSubmit = useCallback(
+    (data: z.infer<typeof FormSchema>) => {
+      const formData = new FormData();
+      formData.append("image", data.image);
+      mutate(formData);
+    },
+    [mutate]
+  );
 
   useEffect(() => {
     return () => {

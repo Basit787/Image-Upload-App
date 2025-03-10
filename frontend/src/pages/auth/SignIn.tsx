@@ -11,12 +11,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { useAuthStep } from "@/context/AuthStepProvider";
+import { useAuthStep } from "@/context/authStep/useAuthStep";
 import { signinAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -39,6 +40,7 @@ export function SignIn() {
   });
 
   const navigate = useNavigate();
+  const { setAuthStep } = useAuthStep();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["singIn"],
@@ -53,14 +55,23 @@ export function SignIn() {
     },
     onError: (error) => {
       toast.error(error.message);
+      form.setError("email", {
+        type: "manual",
+        message: error.message,
+      });
+      form.setError("password", {
+        type: "manual",
+        message: error.message,
+      });
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    mutate(data);
-  }
-
-  const { setAuthStep } = useAuthStep();
+  const onSubmit = useCallback(
+    (data: z.infer<typeof FormSchema>) => {
+      mutate(data);
+    },
+    [mutate]
+  );
 
   return (
     <div className="space-y-2">
@@ -107,7 +118,7 @@ export function SignIn() {
         Dont have any account
         <Button
           className="text-foreground/75 bg-transparent shadow-none hover:bg-transparent cursor-pointer"
-          onClick={() => setAuthStep(1)}
+          onClick={useCallback(() => setAuthStep(1), [setAuthStep])}
         >
           SignUp
         </Button>

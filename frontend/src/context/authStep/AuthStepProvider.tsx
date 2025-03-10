@@ -1,11 +1,11 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 type AuthStepContextType = {
   authStep: number;
   setAuthStep: (step: number) => void;
 };
 
-const AuthStepContext = createContext<AuthStepContextType | undefined>(
+export const AuthStepContext = createContext<AuthStepContextType | undefined>(
   undefined
 );
 
@@ -20,11 +20,3 @@ const AuthStepProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export default AuthStepProvider;
-
-export const useAuthStep = () => {
-  const context = useContext(AuthStepContext);
-  if (!context) {
-    throw new Error("useAuthStep must be used within an AuthStepProvider");
-  }
-  return context;
-};

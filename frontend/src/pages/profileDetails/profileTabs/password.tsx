@@ -9,9 +9,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { queryClient } from "@/services/client";
-import { updatePassword, updateProfile } from "@/services/profile.api";
+import { updatePassword } from "@/services/profile.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -56,14 +57,21 @@ const Password = () => {
       queryClient.invalidateQueries({ queryKey: ["password"] });
       toast("Password updated successfully");
     },
-    onError: () => {
-      toast.error("Failed to update password");
+    onError: (error) => {
+      toast.error(error.message);
+      form.setError("currentPassword", {
+        type: "manual",
+        message: "Invalid current password",
+      });
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    mutate(data);
-  }
+  const onSubmit = useCallback(
+    (data: z.infer<typeof FormSchema>) => {
+      mutate(data);
+    },
+    [mutate]
+  );
 
   return (
     <Form {...form}>

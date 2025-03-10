@@ -6,8 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeleteImageProvider } from "@/context/DeleteImageProvider";
-import { useViewImageContext } from "@/context/ImageViewProvider";
+import { useDeleteImageProvider } from "@/context/deleteImage/useDeleteImage";
+import { useViewImageContext } from "@/context/imageView/useImageView";
 import { queryClient } from "@/services/client";
 import { deleteImage } from "@/services/image.api";
 import { DialogDescription } from "@radix-ui/react-dialog";
@@ -36,7 +36,7 @@ const DeleteImage = () => {
     },
   });
 
-  const handleDelete = useCallback((id: string) => mutate(id), []);
+  const handleDelete = useCallback((id: string) => mutate(id), [mutate]);
 
   return (
     <Dialog open={modal.open} onOpenChange={closeDialog}>

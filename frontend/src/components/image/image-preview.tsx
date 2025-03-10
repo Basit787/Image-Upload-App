@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { useDeleteImageProvider } from "@/context/DeleteImageProvider";
-import { useViewImageContext } from "@/context/ImageViewProvider";
+import { useDeleteImageProvider } from "@/context/deleteImage/useDeleteImage";
+import { useViewImageContext } from "@/context/imageView/useImageView";
 import { Download, Trash } from "lucide-react";
+import { useCallback } from "react";
 import { Lens } from "../magicui/lens";
-import { Link } from "react-router";
 
 const ImagePreview = () => {
   const { modal, onClose } = useViewImageContext();
@@ -36,14 +36,17 @@ const ImagePreview = () => {
               <p className="text-xs text-muted-foreground">{modal.imageSize}</p>
             </div>
             <div className="flex gap-2 ">
-              <Link to={modal.imageSrc}>
+              <a href={modal.imageSrc}>
                 <Button variant="secondary" className="mt-3 md:mt-0">
                   <Download className="w-4 h-4" />
                   <span className="hidden sm:inline">Download</span>
                 </Button>
-              </Link>
+              </a>
               <Button
-                onClick={() => openDialog(modal.imageId)}
+                onClick={useCallback(
+                  () => openDialog(modal.imageId),
+                  [modal, openDialog]
+                )}
                 variant="destructive"
                 className="mt-3 md:mt-0"
               >

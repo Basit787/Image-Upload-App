@@ -1,5 +1,5 @@
 "use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 interface ViewImageModalDetail {
   open: boolean;
@@ -15,7 +15,9 @@ interface ViewImageModal {
   modal: ViewImageModalDetail;
 }
 
-const ViewImageContext = createContext<ViewImageModal | undefined>(undefined);
+export const ViewImageContext = createContext<ViewImageModal | undefined>(
+  undefined
+);
 
 const ViewImageProvider = ({ children }: { children: ReactNode }) => {
   const [imageModalData, setImageModalData] = useState<ViewImageModalDetail>({
@@ -57,11 +59,3 @@ const ViewImageProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export default ViewImageProvider;
-
-export const useViewImageContext = () => {
-  const context = useContext(ViewImageContext);
-  if (!context) {
-    throw new Error("useDialogContext must be used within a DialogProvider");
-  }
-  return context;
-};

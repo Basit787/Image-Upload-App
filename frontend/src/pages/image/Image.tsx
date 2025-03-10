@@ -1,9 +1,9 @@
 import Loading from "@/components/loading";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { useViewImageContext } from "@/context/ImageViewProvider";
 import { getAllImages } from "@/services/image.api";
 import { useQuery } from "@tanstack/react-query";
 import placeholder from "../../assets/placeholder.svg";
+import { useViewImageContext } from "@/context/imageView/useImageView";
 
 export type ImageType = {
   id: string;
@@ -21,6 +21,8 @@ export function ImageGallery() {
     queryFn: () => getAllImages(),
   });
 
+  const { onOpen } = useViewImageContext();
+
   if (isPending) return <Loading />;
   if (error)
     return (
@@ -28,8 +30,6 @@ export function ImageGallery() {
         An error has occurred: {error.message};
       </div>
     );
-
-  const { onOpen } = useViewImageContext();
 
   return (
     <div className="container mx-auto py-8 px-4 relative min-h-screen">

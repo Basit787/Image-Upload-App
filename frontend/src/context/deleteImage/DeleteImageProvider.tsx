@@ -1,5 +1,5 @@
 "use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 interface DialogContextModalDetail {
   open: boolean;
@@ -12,7 +12,7 @@ interface DialogContextType {
   modal: DialogContextModalDetail;
 }
 
-const DeleteImageContext = createContext<DialogContextType | undefined>(
+export const DeleteImageContext = createContext<DialogContextType | undefined>(
   undefined
 );
 
@@ -36,12 +36,4 @@ export const DeleteImageProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </DeleteImageContext.Provider>
   );
-};
-
-export const useDeleteImageProvider = () => {
-  const context = useContext(DeleteImageContext);
-  if (!context) {
-    throw new Error("useDialogContext must be used within a DialogProvider");
-  }
-  return context;
 };

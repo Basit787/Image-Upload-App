@@ -15,6 +15,7 @@ import { updateProfile } from "@/services/profile.api";
 import { getUserDetails } from "@/services/user.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -63,10 +64,12 @@ const Profile = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    mutate(data);
-  }
-
+  const onSubmit = useCallback(
+    (data: z.infer<typeof FormSchema>) => {
+      mutate(data);
+    },
+    [mutate]
+  );
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

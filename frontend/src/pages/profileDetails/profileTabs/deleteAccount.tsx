@@ -10,12 +10,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { queryClient } from "@/services/client";
-import { deleteAllImages } from "@/services/image.api";
 import { deleteAccount } from "@/services/profile.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { Trash2 } from "lucide-react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -37,7 +37,6 @@ const DeleteAccount = () => {
     mutationKey: ["deleteAccount"],
     mutationFn: async (data: z.infer<typeof FormSchema>) => {
       const result = await deleteAccount(data.password);
-      await deleteAllImages 
       return result;
     },
     onSuccess: () => {
@@ -47,21 +46,26 @@ const DeleteAccount = () => {
     },
     onError: () => {
       toast.error("Failed to delete account");
+      form.setError("password", {
+        type: "manual",
+        message: "Invalid password",
+      });
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    mutate(data);
-  }
-
+  const onSubmit = useCallback(
+    (data: z.infer<typeof FormSchema>) => {
+      mutate(data);
+    },
+    [mutate]
+  );
   return (
     <div className="space-y-4  ">
       <p className="text-foreground/50 text-justify">
         <span className="font-bold">Warning:</span> Deleting your account will
-        permanently erase all your data and cannot be reversed. This includes
-        your profile, conversations, comments, and any other info linked to your
-        account. Are you sure you want to go ahead with deleting your account?
-        Enter your password to confirm.
+        permanently erase all your data and cannot be reversed. Are you sure you
+        want to go ahead with deleting your account? Enter your password to
+        confirm.
       </p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

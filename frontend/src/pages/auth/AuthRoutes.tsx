@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { useAuthStep } from "@/context/AuthStepProvider";
+import { useAuthStep } from "@/context/authStep/useAuthStep";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
 
