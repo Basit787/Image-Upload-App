@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useAuthStep } from "@/context/authStep/useAuthStep";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
@@ -20,6 +20,9 @@ const AuthRoutes = () => {
   return (
     <section className="flex justify-center items-center min-h-screen">
       <Card className="md:w-1/3 w-full m-4">
+        <CardHeader className="text-center p-2 pb-6 pt-0 font-bold text-2xl border-b-2">
+         Image Gallery
+        </CardHeader>
         <CardContent>
           <AuthRoute />
         </CardContent>

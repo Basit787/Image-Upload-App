@@ -80,7 +80,6 @@ export function SignUp() {
 
   return (
     <div className="space-y-2">
-      <h1 className="text-center py-4 text-xl font-semibold">SignUp</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
