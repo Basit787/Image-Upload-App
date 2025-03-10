@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "@/constants/app.constants";
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const API_URLS = {
   // auth routes
@@ -8,6 +8,18 @@ const API_URLS = {
 
   // image routes
   getAllImages: () => `${API_BASE_URL}/image/getAllImages`,
+  uploadImage: () => `${API_BASE_URL}/image/uploadImage`,
+  deleteImage: (id: string) => `${API_BASE_URL}/image/deleteImage/${id}`,
+  deleteAllImages: (id: string) =>
+    `${API_BASE_URL}/image/deleteAllImages/${id}`,
+
+  //user routes
+  getUserDetails: () => `${API_BASE_URL}/users/getUserDetails`,
+
+  //profile routes
+  updateUser: () => `${API_BASE_URL}/auth/update-user`,
+  updatePassword: () => `${API_BASE_URL}/auth/change-password`,
+  deleteUser: () => `${API_BASE_URL}/auth/delete-user`,
 };
 
 export { API_URLS };

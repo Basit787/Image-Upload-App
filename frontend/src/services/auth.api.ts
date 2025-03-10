@@ -9,13 +9,12 @@ export const signinAPI = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
     credentials: "include",
   });
-
-  console.log("response", response);
-
   if (!response.ok) {
-    throw new Error("Invalid email or password");
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message ?? `HTTP error! status: ${response.status}`
+    );
   }
-
   return response.json();
 };
 
@@ -32,12 +31,25 @@ export const signupAPI = async (
     body: JSON.stringify({ name, email, password }),
     credentials: "include",
   });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message ?? `HTTP error! status: ${response.status}`
+    );
+  }
   return await response.json();
 };
 
 export const signOutApi = async () => {
-  return await fetch(API_URLS.signOut(), {
+  const response = await fetch(API_URLS.signOut(), {
     method: "POST",
     credentials: "include",
   });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message ?? `HTTP error! status: ${response.status}`
+    );
+  }
+  return await response.json();
 };

@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuthStep } from "@/context/AuthStepProvider";
-import { SignIn } from "./auth/SignIn";
-import { SignUp } from "./auth/SignUp";
+import { SignIn } from "./SignIn";
+import { SignUp } from "./SignUp";
 
 const AuthRoutes = () => {
   const { authStep } = useAuthStep();

@@ -13,5 +13,5 @@ imageRoute.post(
   image.imageUpload
 );
 imageRoute.get("/getAllImages", authMiddleware, image.getAllImages);
-imageRoute.get("/getSingleImage/:id", authMiddleware, image.getSingleImage);
 imageRoute.delete("/deleteImage/:id", authMiddleware, image.deleteImage);
+imageRoute.delete("/deleteAllImages/:id", authMiddleware, image.deleteAllImages);

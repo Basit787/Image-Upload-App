@@ -22,6 +22,8 @@ import { queryClient } from "@/services/client";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import Cookies from "js-cookie";
+import { getValidName } from "@/helper/utils";
 
 const FormSchema = z
   .object({
@@ -52,11 +54,16 @@ export function SignUp() {
   const { mutate, isPending } = useMutation({
     mutationKey: ["signUp"],
     mutationFn: async (payload: z.infer<typeof FormSchema>) => {
-      return await signupAPI(payload.name, payload.email, payload.password);
-      navigate("/");
+      return await signupAPI(
+        getValidName(payload.name),
+        payload.email,
+        payload.password
+      );
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["signUp"] });
+      Cookies.set("token", data?.token);
+      navigate("/");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -80,7 +87,7 @@ export function SignUp() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your Name" {...field} />
+                  <TextInput placeholder="Enter your Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -93,7 +100,7 @@ export function SignUp() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" {...field} />
+                  <TextInput placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -9,9 +9,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { queryClient } from "@/services/client";
+import { deleteAllImages } from "@/services/image.api";
+import { deleteAccount } from "@/services/profile.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { Trash2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const FormSchema = z.object({
@@ -27,8 +33,25 @@ const DeleteAccount = () => {
     },
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["deleteAccount"],
+    mutationFn: async (data: z.infer<typeof FormSchema>) => {
+      const result = await deleteAccount(data.password);
+      await deleteAllImages 
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["deleteAccount"] });
+      Cookies.remove("token");
+      toast("Account deleted successfully");
+    },
+    onError: () => {
+      toast.error("Failed to delete account");
+    },
+  });
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    mutate(data);
   }
 
   return (
@@ -64,7 +87,11 @@ const DeleteAccount = () => {
           />
 
           <div className="flex justify-end pt-2">
-            <Button type="submit" className="h-12 md:text-lg text-base p-4">
+            <Button
+              type="submit"
+              className="h-12 md:text-lg text-base p-4"
+              disabled={isPending}
+            >
               <Trash2 />
               <span>Delete Account</span>
             </Button>

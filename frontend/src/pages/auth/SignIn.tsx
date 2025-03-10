@@ -16,6 +16,7 @@ import { signinAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -43,16 +44,14 @@ export function SignIn() {
     mutationKey: ["singIn"],
     mutationFn: async (payload: z.infer<typeof FormSchema>) => {
       const data = await signinAPI(payload.email, payload.password);
-      console.log(data);
+      return data;
     },
     onSuccess: (data) => {
-      console.log("data", data);
       queryClient.invalidateQueries({ queryKey: ["signIn"] });
+      Cookies.set("token", data?.token);
       navigate("/");
     },
     onError: (error) => {
-      console.log("error", error);
-
       toast.error(error.message);
     },
   });

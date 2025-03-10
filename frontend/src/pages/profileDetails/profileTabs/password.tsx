@@ -8,8 +8,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { queryClient } from "@/services/client";
+import { updatePassword, updateProfile } from "@/services/profile.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const FormSchema = z
@@ -39,8 +43,26 @@ const Password = () => {
     },
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["password"],
+    mutationFn: async (data: z.infer<typeof FormSchema>) => {
+      const result = await updatePassword(
+        data.currentPassword,
+        data.newPassword
+      );
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["password"] });
+      toast("Password updated successfully");
+    },
+    onError: () => {
+      toast.error("Failed to update password");
+    },
+  });
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    mutate(data);
   }
 
   return (
@@ -108,7 +130,11 @@ const Password = () => {
         />
 
         <div className="flex justify-end pt-4">
-          <Button type="submit" className="h-12 md:text-lg text-base p-4">
+          <Button
+            type="submit"
+            className="h-12 md:text-lg text-base p-4"
+            disabled={isPending}
+          >
             Update Password
           </Button>
         </div>

@@ -1,26 +1,28 @@
-import Error from "@/components/error";
-import AuthRoutes from "@/pages/AuthRoutes";
-import { ImageGallery } from "@/pages/image/image-gallery";
-import Image from "@/pages/ImageGallery";
+import ErrorPage from "@/error-element";
+import NotFound from "@/not-found";
+import AuthRoutes from "@/pages/auth/AuthRoutes";
+import { ImageGallery } from "@/pages/image/Image";
+import ProfileDetails from "@/pages/profileDetails/ProfileDetails";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import ProtectedRoutes from "./protected-routes";
-import ProfileDetails from "@/pages/profileDetails/ProfileDetails";
+import PublicRoutes from "./public-route";
 
 const routes = createBrowserRouter([
   {
     path: "/auth",
-    element: <AuthRoutes />,
+    element: <PublicRoutes />,
+    children: [{ index: true, element: <AuthRoutes /> }],
   },
   {
     path: "/",
     element: <ProtectedRoutes />,
+    errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Image /> },
-      { path: "gallery", element: <ImageGallery /> },
+      { index: true, element: <ImageGallery /> },
       { path: "profile", element: <ProfileDetails /> },
     ],
   },
-  { path: "*", element: <Error /> },
+  { path: "*", element: <NotFound /> },
 ]);
 
 export const AppRoutes = () => {

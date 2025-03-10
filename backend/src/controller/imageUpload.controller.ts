@@ -8,11 +8,10 @@ import { eq } from "drizzle-orm";
 //upload image
 export const imageUpload = async (c: Context) => {
   const user = c.get("user");
-  console.log("upload", user);
 
   try {
-    const data = await c.req.parseBody();
-    const file = data.image as File;
+    const data = await c.req.formData();
+    const file = data.get("image") as File;
     const buffer = await file.arrayBuffer();
 
     const param = {
@@ -37,10 +36,9 @@ export const imageUpload = async (c: Context) => {
       201
     );
   } catch (error) {
-    console.log(error instanceof Error ? error.message : error);
     return c.json(
       {
-        message: "upload image failed",
+        message: "Failed to upload the image",
         error: error instanceof Error ? error.message : error,
       },
       500
@@ -51,7 +49,6 @@ export const imageUpload = async (c: Context) => {
 //get all images
 export const getAllImages = async (c: Context) => {
   const user = c.get("user");
-  console.log("image", user);
   try {
     const result = await db
       .select()
@@ -65,36 +62,20 @@ export const getAllImages = async (c: Context) => {
 
     return c.json({ error: "Images fetched sucessfully", result }, 200);
   } catch (error) {
-    return c.json({ message: "upload image failed", error }, 500);
-  }
-};
-
-//get single image
-export const getSingleImage = async (c: Context) => {
-  const id = c.req.param("id");
-  try {
-    const result = await db
-      .select()
-      .from(imageTable)
-      .where(eq(imageTable.id, id));
-
-    if (!result.length) return c.json({ error: "Failed to get images" }, 404);
-
-    console.log(result);
-
-    // const url = await s3GetImage(result.key!);
-    // result.url = url;
-
-    return c.json({ message: "Images fetched sucessfully", result }, 200);
-  } catch (error) {
-    return c.json({ message: "upload image failed", error }, 500);
+    return c.json(
+      {
+        message: "upload image failed",
+        error: error instanceof Error ? error.message : error,
+      },
+      500
+    );
   }
 };
 
 //delete image
 export const deleteImage = async (c: Context) => {
   const id = c.req.param("id");
-
+  console.log(id);
   try {
     const result = await db
       .select()
@@ -104,21 +85,62 @@ export const deleteImage = async (c: Context) => {
     if (!result.length) return c.json({ error: "Failed to get images" }, 404);
 
     const deleteData = await db.delete(imageTable).where(eq(imageTable.id, id));
+
     if (!deleteData) {
       return c.json({ message: "Failed to delete image" }, 400);
     }
 
-    // const sendData = await s3DeleteImage(result.key!);
-
-    // if (!sendData) {
-    //   return c.json({ error: "upload image failed" }, 400);
-    // }
+    await s3DeleteImage(result[0].key);
 
     return c.json(
-      { message: "Images deleted sucessfully", result: deleteData },
+      { message: "Image deleted sucessfully", result: deleteData },
       200
     );
   } catch (error) {
-    return c.json({ message: "Failed to fetch single image", error }, 500);
+    return c.json(
+      {
+        message: "Failed to delete image",
+        error: error instanceof Error ? error.message : error,
+      },
+      500
+    );
+  }
+};
+
+export const deleteAllImages = async (c: Context) => {
+  const user = c.get("user");
+
+  try {
+    const images = await db
+      .select()
+      .from(imageTable)
+      .where(eq(imageTable.userId, user.id));
+
+    if (!images.length) {
+      return c.json({ message: "No images found for the user" }, 404);
+    }
+
+    const deleteData = await db
+      .delete(imageTable)
+      .where(eq(imageTable.userId, user.id));
+
+    const s3DeletePromises = images.map((image) => s3DeleteImage(image.key));
+    await Promise.all(s3DeletePromises);
+
+    return c.json(
+      {
+        message: "All images deleted successfully",
+        count: deleteData.length,
+      },
+      200
+    );
+  } catch (error) {
+    return c.json(
+      {
+        message: "Failed to delete images",
+        error: error instanceof Error ? error.message : error,
+      },
+      500
+    );
   }
 };

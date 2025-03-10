@@ -3,43 +3,68 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getValidName } from "@/helper/utils";
+import { queryClient } from "@/services/client";
+import { updateProfile } from "@/services/profile.api";
+import { getUserDetails } from "@/services/user.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  phoneNumber: z.string().regex(/^\+?\d{10,15}$/, {
-    message: "Phone number must be a valid format (10-15 digits).",
-  }),
-  email: z.string().email({
-    message: "Invalid email address.",
-  }),
-  organization: z.string().min(2, {
-    message: "Organization name must be at least 2 characters.",
-  }),
+  email: z
+    .string()
+    .email({
+      message: "Invalid email address.",
+    })
+    .optional(),
 });
 
 const Profile = () => {
+  const { data } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getUserDetails(),
+  });
+
+  const user = data?.result;
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["profile"],
+    mutationFn: async (data: z.infer<typeof FormSchema>) => {
+      const result = await updateProfile(getValidName(data.username));
+      console.log(result);
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+      toast("User profile updated");
+    },
+    onError: () => {
+      toast.error("Failed to update user profile");
+    },
+  });
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
-      phoneNumber: "",
-      email: "",
-      organization: "",
+      username: user?.name ?? "",
+      email: user?.email ?? "",
     },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    mutate(data);
   }
 
   return (
@@ -78,35 +103,26 @@ const Profile = () => {
                   placeholder="Email"
                   {...field}
                   className="rounded-xl"
+                  readOnly
                 />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="organization"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
-                Organization
-              </FormLabel>
-              <FormControl>
-                <TextInput
-                  placeholder="Organization"
-                  {...field}
-                  className="rounded-xl"
-                />
-              </FormControl>
+              <FormDescription>
+                Note: You cant update your email
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="h-12 md:text-lg text-base p-4">
-          Update Info
-        </Button>
+        <div className="flex justify-end pt-4">
+          <Button
+            type="submit"
+            className="h-12 md:text-lg text-base p-4"
+            disabled={isPending}
+          >
+            Update Info
+          </Button>
+        </div>
       </form>
     </Form>
   );

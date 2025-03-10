@@ -1,23 +1,17 @@
-import {
-  Briefcase,
-  House,
-  LogOut,
-  Settings,
-  User,
-  type LucideIcon,
-} from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { signOutApi } from "@/services/auth.api";
+import { queryClient } from "@/services/client";
+import { getUserDetails } from "@/services/user.api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { LogOut, User, type LucideIcon } from "lucide-react";
+import { Link, useNavigate } from "react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { ImageAdd } from "./imageAdd/image-add";
-import { useNavigate } from "react-router";
-import { useMutation } from "@tanstack/react-query";
-import { signOutApi } from "@/services/auth.api";
-import { queryClient } from "@/services/client";
+import Cookies from "js-cookie";
+import { ImageUpload } from "./image/image-upload";
 
 type ProfileOption = {
   text: string;
@@ -35,9 +29,17 @@ const Header = () => {
     mutationFn: () => signOutApi(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["signOut"] });
+      Cookies.remove("token");
       navigate("/auth", { replace: true });
     },
   });
+
+  const { data } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getUserDetails(),
+  });
+
+  const user = data?.result;
 
   const profileOptions: ProfileOption[][] = [
     [
@@ -60,11 +62,13 @@ const Header = () => {
     return (
       <Avatar className="h-10 w-10">
         <AvatarImage
-          src="https://github.com/shadcn.png"
-          alt="@shadcn"
+          src={user?.image}
+          alt={user?.name}
           className="rounded-full cursor-pointer"
         />
-        <AvatarFallback className="text-sm">SA</AvatarFallback>
+        <AvatarFallback className="text-lg font-bold">
+          {user?.name.split("")[0].toUpperCase()}
+        </AvatarFallback>
       </Avatar>
     );
   };
@@ -74,7 +78,7 @@ const Header = () => {
       <>
         <div className="flex flex-row items-center gap-4 p-2 relative">
           <UserAvatar />
-          <h1 className="text-lg font-bold leading-none">Saqlain Ansari</h1>
+          <h1 className="text-lg font-bold leading-none">{user.name}</h1>
         </div>
         <div>
           {profileOptions.map((profileOption, index) => (
@@ -92,9 +96,9 @@ const Header = () => {
                 );
                 if (item.link) {
                   return (
-                    <a href={item.link} key={item.link}>
+                    <Link to={item.link} key={item.link}>
                       <DivItem />
-                    </a>
+                    </Link>
                   );
                 }
                 return <DivItem key={item.link} />;
@@ -118,7 +122,7 @@ const Header = () => {
           <p className="text-primary/55 font-semibold">Add your images here</p>
         </div>
         <div className="flex flex-row gap-4 items-center">
-          <ImageAdd />
+          <ImageUpload />
 
           {!isMobile ? (
             <HoverCard openDelay={0}>

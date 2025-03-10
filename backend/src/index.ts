@@ -7,11 +7,11 @@ import { indexRoutes } from "./routes/index.js";
 const app = new Hono();
 
 app.use(
-  "*", // or replace with "*" to enable cors for all routes
+  "*",
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"], // replace with your origin
+    origin: ["http://localhost:5173", "http://localhost:3000"],
     allowHeaders: ["Content-Type", "Authorization"],
-    allowMethods: ["POST", "GET", "OPTIONS"],
+    allowMethods: ["POST", "GET", "PUT", "DELETE"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
     credentials: true,
