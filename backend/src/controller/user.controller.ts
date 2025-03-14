@@ -19,7 +19,7 @@ export const getSingleUsers = async (c: Context) => {
     if (!result.length) return c.json({ message: "User not found" }, 404);
     return c.json(
       { message: "Users fetched successfully", result: result[0] },
-      200
+      200,
     );
   } catch (error) {
     return c.json({ message: "Failed to fetch users", error }, 500);
@@ -31,7 +31,7 @@ export const getUserDetails = async (c: Context) => {
   try {
     return c.json(
       { message: "User detils fetched successfully", result: user },
-      200
+      200,
     );
   } catch (error) {
     return c.json({ message: "Failed to fetch users", error }, 500);

@@ -33,7 +33,7 @@ export const imageUpload = async (c: Context) => {
 
     return c.json(
       { message: "Image uploaded successfully", reult: savedData[0] },
-      201
+      201,
     );
   } catch (error) {
     return c.json(
@@ -41,7 +41,7 @@ export const imageUpload = async (c: Context) => {
         message: "Failed to upload the image",
         error: error instanceof Error ? error.message : error,
       },
-      500
+      500,
     );
   }
 };
@@ -67,7 +67,7 @@ export const getAllImages = async (c: Context) => {
         message: "upload image failed",
         error: error instanceof Error ? error.message : error,
       },
-      500
+      500,
     );
   }
 };
@@ -94,7 +94,7 @@ export const deleteImage = async (c: Context) => {
 
     return c.json(
       { message: "Image deleted sucessfully", result: deleteData },
-      200
+      200,
     );
   } catch (error) {
     return c.json(
@@ -102,7 +102,7 @@ export const deleteImage = async (c: Context) => {
         message: "Failed to delete image",
         error: error instanceof Error ? error.message : error,
       },
-      500
+      500,
     );
   }
 };
@@ -132,7 +132,7 @@ export const deleteAllImages = async (c: Context) => {
         message: "All images deleted successfully",
         count: deleteData.length,
       },
-      200
+      200,
     );
   } catch (error) {
     return c.json(
@@ -140,7 +140,7 @@ export const deleteAllImages = async (c: Context) => {
         message: "Failed to delete images",
         error: error instanceof Error ? error.message : error,
       },
-      500
+      500,
     );
   }
 };

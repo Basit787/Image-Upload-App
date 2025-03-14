@@ -3,13 +3,16 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/src/index.js",
     "lint": "eslint src .",
+    "prettier": "npx prettier . --check --write",
     "mig:push": "npx drizzle-kit push",
     "mig:gen": "npx drizzle-kit generate",
     "mig:run": "npx drizzle-kit migrate",
     "studio": "npx drizzle-kit studio",
-    "docker":"docker compose up -d",
-    "docker:stop":"docker compose down"
+    "docker": "docker compose up -d",
+    "docker:stop": "docker compose down"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
@@ -30,6 +33,7 @@
     "drizzle-kit": "^0.30.5",
     "eslint": "^9.21.0",
     "globals": "^16.0.0",
+    "prettier": "3.5.3",
     "tsx": "^4.19.3",
     "typescript-eslint": "^8.26.0"
   }
