@@ -13,6 +13,6 @@ export const authMiddleware = async (c: Context, next: Next) => {
     c.set("session", session.session);
     return next();
   } catch (error) {
-    return c.json({ message: "failed in authentication" }, 500);
+    return c.json({ message: "failed in authentication", error }, 500);
   }
 };
