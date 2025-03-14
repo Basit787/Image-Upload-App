@@ -1,31 +1,10 @@
-import { Navigate, Outlet, useLocation } from "react-router";
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import Loading from "@/components/loading";
+import { useAuth } from "@/context/login/useAuth";
+import { Navigate, Outlet } from "react-router";
 
 const AuthGuard = () => {
-  const [auth, setAuth] = useState<boolean | null>(null);
-  const location = useLocation();
+  const { isToken } = useAuth();
 
-  useEffect(() => {
-    const checkAuth = () => {
-      setAuth(!!Cookies.get("token"));
-    };
-
-    checkAuth();
-
-    const interval = setInterval(checkAuth, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  if (auth === null) return <Loading />;
-
-  return auth ? (
-    <Navigate to="/" replace state={{ from: location }} />
-  ) : (
-    <Outlet />
-  );
+  return isToken ? <Navigate to="/" replace /> : <Outlet />;
 };
 
 export default AuthGuard;

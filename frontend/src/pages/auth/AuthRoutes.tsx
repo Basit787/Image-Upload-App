@@ -19,7 +19,7 @@ const AuthRoutes = () => {
 
   return (
     <section className="flex justify-center items-center min-h-screen">
-      <Card className="md:w-1/3 w-full m-4">
+      <Card className="xl:w-1/3 md:1/2 w-full m-4">
         <CardHeader className="text-center p-2 pb-6 pt-0 font-bold text-2xl border-b-2">
           Image Gallery
         </CardHeader>

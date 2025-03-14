@@ -3,17 +3,20 @@ import SignModeContext from "./authStep/AuthStepProvider";
 import { DeleteImageProvider } from "./deleteImage/DeleteImageProvider";
 import ViewImageProvider from "./imageView/ImageViewProvider";
 import ImagePreview from "@/components/image/image-preview";
+import AuthProvider from "./login/authProvider";
 
 const ContextProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <SignModeContext>
-      <ViewImageProvider>
-        <DeleteImageProvider>
-          <DeleteImage />
-          <ImagePreview />
-          {children}
-        </DeleteImageProvider>
-      </ViewImageProvider>
+      <AuthProvider>
+        <ViewImageProvider>
+          <DeleteImageProvider>
+            <DeleteImage />
+            <ImagePreview />
+            {children}
+          </DeleteImageProvider>
+        </ViewImageProvider>
+      </AuthProvider>
     </SignModeContext>
   );
 };

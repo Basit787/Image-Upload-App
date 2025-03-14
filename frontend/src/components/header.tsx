@@ -1,38 +1,28 @@
+import { useAuth } from "@/context/login/useAuth";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { signOutApi } from "@/services/auth.api";
-import { queryClient } from "@/services/client";
 import { getUserDetails } from "@/services/user.api";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
-import { LogOut, User, type LucideIcon } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import { Home, LogOut, User, type LucideIcon } from "lucide-react";
+import { useLocation, useNavigate } from "react-router";
+import ImageUpload from "./image/image-upload";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card } from "./ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import ImageUpload from "./image/image-upload";
 
 type ProfileOption = {
   text: string;
   icon: LucideIcon;
   onClick?: () => void;
   link?: string;
+  locate?: string;
 };
 
 const Header = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
-
-  const { mutate } = useMutation({
-    mutationKey: ["signOut"],
-    mutationFn: () => signOutApi(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["signOut"] });
-      Cookies.remove("token");
-      navigate("/auth", { replace: true });
-    },
-  });
+  const { logout } = useAuth();
 
   const { data } = useQuery({
     queryKey: ["profile"],
@@ -40,12 +30,20 @@ const Header = () => {
   });
 
   const user = data?.result;
+  const location = useLocation();
 
   const profileOptions: ProfileOption[][] = [
     [
       {
+        text: "Home",
+        icon: Home,
+        locate: "/",
+        onClick: () => navigate("/"),
+      },
+      {
         text: "Profile Details",
         icon: User,
+        locate: "/profile",
         onClick: () => navigate("/profile"),
       },
     ],
@@ -53,7 +51,7 @@ const Header = () => {
       {
         text: "Logout",
         icon: LogOut,
-        onClick: () => mutate(),
+        onClick: () => logout(),
       },
     ],
   ];
@@ -82,12 +80,16 @@ const Header = () => {
         </div>
         <div>
           {profileOptions.map((profileOption, index) => (
-            <div key={index + "div1"} className="flex flex-col">
+            <div key={index + "div1"} className="flex flex-col gap-2">
               {profileOption.map((item, itemIndex) => {
                 const DivItem = () => (
                   <div
                     key={itemIndex}
-                    className="flex items-center gap-3 p-2 cursor-pointer hover:bg-primary/25 hover:text-secondary text-primary/50 rounded-lg"
+                    className={`flex items-center gap-3 p-2 cursor-pointer hover:bg-primary/25 hover:text-secondary text-primary/50 rounded-lg ${
+                      location.pathname === item.locate
+                        ? "bg-primary/25 text-secondary"
+                        : ""
+                    }`}
                     onClick={() => item.onClick && item.onClick()}
                   >
                     <item.icon className="w-5 h-5" />

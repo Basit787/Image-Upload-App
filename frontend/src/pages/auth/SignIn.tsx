@@ -12,14 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useAuthStep } from "@/context/authStep/useAuthStep";
+import { useAuth } from "@/context/login/useAuth";
 import { signinAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -39,8 +38,8 @@ const SignIn = () => {
     },
   });
 
-  const navigate = useNavigate();
   const { setAuthStep } = useAuthStep();
+  const { login } = useAuth();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["singIn"],
@@ -50,8 +49,7 @@ const SignIn = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["signIn"] });
-      Cookies.set("token", data?.token);
-      navigate("/");
+      login(data?.token);
     },
     onError: (error) => {
       toast.error(error.message);

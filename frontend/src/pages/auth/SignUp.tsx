@@ -15,15 +15,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import { useAuthStep } from "@/context/authStep/useAuthStep";
+import { useAuth } from "@/context/login/useAuth";
 import { getValidName } from "@/helper/utils";
 import { signupAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { useMutation } from "@tanstack/react-query";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import { useAuthStep } from "@/context/authStep/useAuthStep";
 import { useCallback } from "react";
+import { toast } from "sonner";
 
 const FormSchema = z
   .object({
@@ -49,8 +48,8 @@ const SignUp = () => {
     },
   });
 
-  const navigate = useNavigate();
   const { setAuthStep } = useAuthStep();
+  const { login } = useAuth();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["signUp"],
@@ -63,8 +62,7 @@ const SignUp = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["signUp"] });
-      Cookies.set("token", data?.token);
-      navigate("/");
+      login(data?.token);
     },
     onError: (error) => {
       toast.error(error.message);
