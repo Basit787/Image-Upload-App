@@ -19,7 +19,7 @@ const API_URLS = {
   //profile routes
   updateUser: () => `${API_BASE_URL}/auth/update-user`,
   updatePassword: () => `${API_BASE_URL}/auth/change-password`,
-  deleteUser: () => `${API_BASE_URL}/auth/delete-user`,
+  deleteUser: () => `${API_BASE_URL}/e`,
 };
 
 export { API_URLS };
