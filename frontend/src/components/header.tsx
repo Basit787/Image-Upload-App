@@ -1,4 +1,5 @@
 import { useAuth } from "@/context/auth/use-auth";
+import { useTheme } from "@/context/themeProvider/use-theme";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getUserDetails } from "@/services/user.api";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +11,6 @@ import { Card } from "./ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { useTheme } from "@/context/themeProvider/use-theme";
 
 type ProfileOption = {
   text: string;
