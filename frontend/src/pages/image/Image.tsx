@@ -3,9 +3,9 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { getAllImages } from "@/services/image.api";
 import { useQuery } from "@tanstack/react-query";
 import placeholder from "../../assets/placeholder.svg";
-import { useViewImageContext } from "@/context/imageView/useImageView";
 import { BlurFade } from "@/components/blur-fade";
 import { useState } from "react";
+import { useViewImageContext } from "@/context/imageViewProvider/use-imageView";
 
 export type ImageType = {
   id: string;

@@ -15,8 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { useAuthStep } from "@/context/authStep/useAuthStep";
-import { useAuth } from "@/context/auth/useAuth";
+import { useAuth } from "@/context/auth/use-auth";
 import { getValidName } from "@/helper/utils";
 import { signupAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
@@ -24,6 +23,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { BlurFade } from "@/components/blur-fade";
+import { useAuthStep } from "@/context/authStepProvider/use-authStep";
 
 const FormSchema = z
   .object({

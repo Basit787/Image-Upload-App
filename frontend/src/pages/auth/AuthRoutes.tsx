@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useAuthStep } from "@/context/authStep/useAuthStep";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { BlurFade } from "@/components/blur-fade";
+import { useAuthStep } from "@/context/authStepProvider/use-authStep";
 
 const AuthRoutes = () => {
   const { authStep } = useAuthStep();

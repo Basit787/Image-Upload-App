@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { useDeleteImageProvider } from "@/context/deleteImage/useDeleteImage";
-import { useViewImageContext } from "@/context/imageView/useImageView";
 import { Download, Trash } from "lucide-react";
 import { memo, useCallback } from "react";
 import { Lens } from "../lens";
+import { useViewImageContext } from "@/context/imageViewProvider/use-imageView";
+import { useDeleteImageProvider } from "@/context/deleteImageProvider/use-deleteImage";
 
 const ImagePreview = () => {
   const { modal, onClose } = useViewImageContext();

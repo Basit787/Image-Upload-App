@@ -6,8 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeleteImageProvider } from "@/context/deleteImage/useDeleteImage";
-import { useViewImageContext } from "@/context/imageView/useImageView";
+import { useDeleteImageProvider } from "@/context/deleteImageProvider/use-deleteImage";
+import { useViewImageContext } from "@/context/imageViewProvider/use-imageView";
 import { queryClient } from "@/services/client";
 import { deleteImage } from "@/services/image.api";
 import { DialogDescription } from "@radix-ui/react-dialog";

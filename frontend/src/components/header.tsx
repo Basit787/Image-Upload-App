@@ -1,8 +1,8 @@
-import { useAuth } from "@/context/auth/useAuth";
+import { useAuth } from "@/context/auth/use-auth";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getUserDetails } from "@/services/user.api";
 import { useQuery } from "@tanstack/react-query";
-import { Home, LogOut, User, type LucideIcon } from "lucide-react";
+import { Home, LogOut, Moon, Sun, User, type LucideIcon } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
 import ImageUpload from "./image/image-upload";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -10,6 +10,7 @@ import { Card } from "./ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { useTheme } from "@/context/themeProvider/use-theme";
 
 type ProfileOption = {
   text: string;
@@ -23,6 +24,8 @@ const Header = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   const { data } = useQuery({
     queryKey: ["profile"],
@@ -30,7 +33,6 @@ const Header = () => {
   });
 
   const user = data?.result;
-  const location = useLocation();
 
   const profileOptions: ProfileOption[][] = [
     [
@@ -48,6 +50,13 @@ const Header = () => {
       },
     ],
     [
+      {
+        text: theme === "dark" ? "Dark Mode" : "Light Mode",
+        icon: theme === "dark" ? Moon : Sun,
+        onClick: () => {
+          theme === "dark" ? setTheme("light") : setTheme("dark");
+        },
+      },
       {
         text: "Logout",
         icon: LogOut,
@@ -85,9 +94,9 @@ const Header = () => {
                 const DivItem = () => (
                   <div
                     key={itemIndex}
-                    className={`flex items-center gap-3 p-2 cursor-pointer hover:bg-primary/25 hover:text-secondary text-primary/50 rounded-lg ${
+                    className={`flex items-center gap-3 p-2 cursor-pointer hover:bg-primary/25 hover:text-foreground/50 text-foreground rounded-lg ${
                       location.pathname === item.locate
-                        ? "bg-primary/25 text-secondary"
+                        ? "bg-primary/25 text-foreground"
                         : ""
                     }`}
                     onClick={() => item.onClick && item.onClick()}

@@ -12,8 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { useAuthStep } from "@/context/authStep/useAuthStep";
-import { useAuth } from "@/context/auth/useAuth";
+import { useAuth } from "@/context/auth/use-auth";
+import { useAuthStep } from "@/context/authStepProvider/use-authStep";
 import { signinAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { ViewImageContext } from "./ImageViewProvider";
+import { DeleteImageContext } from "./deleteImage-provider";
 
-export const useViewImageContext = () => {
-  const context = useContext(ViewImageContext);
+export const useDeleteImageProvider = () => {
+  const context = useContext(DeleteImageContext);
   if (!context) {
     throw new Error("useDialogContext must be used within a DialogProvider");
   }
