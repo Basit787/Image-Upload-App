@@ -1,11 +1,11 @@
+import { BlurFade } from "@/components/blur-fade";
 import Loading from "@/components/loading";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { useViewImageContext } from "@/context/imageViewProvider/use-imageView";
 import { getAllImages } from "@/services/image.api";
 import { useQuery } from "@tanstack/react-query";
-import placeholder from "../../assets/placeholder.svg";
-import { BlurFade } from "@/components/blur-fade";
 import { useState } from "react";
-import { useViewImageContext } from "@/context/imageViewProvider/use-imageView";
+import placeholder from "../../assets/placeholder.svg";
 
 export type ImageType = {
   id: string;
@@ -22,7 +22,7 @@ const ImageCard = ({
   onOpen,
 }: {
   image: ImageType;
-  onOpen: Function;
+  onOpen: (src: string, id: string, name: string, size: string) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);

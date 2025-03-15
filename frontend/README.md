@@ -2,166 +2,148 @@
 
 A modern web application for uploading and managing images with a sleek user interface and real-time updates.
 
-## Features
+---
 
-- 🖼️ Image upload and management
-- 👤 User authentication and profiles
-- 📱 Responsive design (mobile & desktop support)
-- 🎨 Modern UI with Tailwind CSS and shadcn/ui
-- 🔄 Real-time updates with TanStack Query
-- 🎯 Hover cards and mobile-friendly sheets
-- 🏃‍♂️ Fast and efficient image loading
-- 🛣️ Protected route navigation
+## 🚀 Features
 
-## Tech Stack
+- 🖼️ **Image Upload & Management** – Upload, preview, and manage images with ease.
+- 👤 **User Authentication & Profiles** – Secure authentication and user profile management.
+- 📱 **Responsive Design** – Mobile and desktop-friendly UI.
+- 🎨 **Modern UI** – Built with Tailwind CSS and shadcn/ui components.
+- 🔄 **Real-time Updates** – Integrated with TanStack Query (React Query) for instant UI updates.
+- 🎯 **Hover Cards & Sheets** – Interactive UI elements for a better experience.
+- 🏃‍♂️ **Optimized Performance** – Fast image loading and efficient caching.
+- 🛣️ **Protected Route Navigation** – Secure pages with authentication guards.
 
-- **Frontend Framework**: React/TypeScript
-- **Routing**:
-  - React Router DOM v6
-  - Protected Routes
-  - Dynamic route handling
-- **Styling**:
-  - Tailwind CSS
-  - shadcn/ui components
-- **State Management & Data Fetching**:
-  - TanStack Query (React Query)
-- **UI Components**:
-  - Lucide Icons
-  - Custom Avatar components
-  - Hover Cards
-  - Sheet components
+---
 
-## Prerequisites
+## 🛠️ Tech Stack
+
+### **Frontend**
+
+- **Framework**: React + TypeScript
+- **Routing**: React Router DOM v6 (Protected Routes, Dynamic Route Handling)
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **State Management & Data Fetching**: TanStack Query (React Query)
+- **UI Components**: Lucide Icons, Custom Avatar components, Hover Cards, Sheet components
+
+---
+
+## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-- Node.js
+- [Node.js](https://nodejs.org/)
 - npm or yarn package manager
 
-## Installation
+---
 
-1. Clone the repository:
+## 🚀 Installation
 
-```bash
-git clone https://github.com/Basit787/Image-Upload-App.git
-```
+1. **Clone the repository:**
 
-2. Navigate to the project directory:
+   ```bash
+   git clone https://github.com/Basit787/Image-Upload-App.git
+   ```
 
-```bash
-cd frontend
-```
+2. **Navigate to the project directory:**
 
-3. Navigate to the project directory:
+   ```bash
+   cd frontend
+   ```
 
-```bash
-npm install
-# or
-yarn install
-```
+3. **Install dependencies:**
 
-4. Start the development server:
+   ```bash
+   npm install  # or yarn install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+4. **Start the development server:**
+   ```bash
+   npm run dev  # or yarn dev
+   ```
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
+```
 src/
 ├── components/
-│ ├── header.tsx
-│ ├── image/
-│ │ └── delete-image.tsx
-│ │ └── image-preview.tsx
-│ │ └── image-upload.tsx
-│ └── ui/
-│ ├── avatar.tsx
-│ ├── card.tsx
-│ ├── hover-card.tsx
-│ └── sheet.tsx
+│   ├── header.tsx
+│   ├── image/
+│   │   ├── delete-image.tsx
+│   │   ├── image-preview.tsx
+│   │   ├── image-upload.tsx
+│   └── ui/
+│       ├── avatar.tsx
+│       ├── card.tsx
+│       ├── hover-card.tsx
+│       └── sheet.tsx
 ├── context/
-│ └── login/
-│ └── useAuth.tsx
+│   └── login/
+│       └── useAuth.tsx
 ├── hooks/
-│ └── use-mobile.tsx
+│   └── use-mobile.tsx
 ├── routes/
-│ ├── protected-route.tsx
-│ ├── public-route.tsx
-│ └── routes.tsx
+│   ├── protected-route.tsx
+│   ├── public-route.tsx
+│   └── routes.tsx
 ├── pages/
-│ ├── home/
-│ ├── gallery/
-│ ├── profile/
-│ └── auth/
+│   ├── home/
+│   ├── gallery/
+│   ├── profile/
+│   └── auth/
 ├── services/
-│ ├── auth.api.ts/
-│ ├── client.ts/
-│ ├── config.ts/
-│ ├── image.api.ts/
-│ ├── profile.api.ts/
-│ └── user.api.ts/
+│   ├── auth.api.ts
+│   ├── client.ts
+│   ├── config.ts
+│   ├── image.api.ts
+│   ├── profile.api.ts
+│   └── user.api.ts
 └── ...
+```
 
 ---
 
-## Features in Detail
+## 🔹 Features in Detail
 
-- Routing & Navigation
+### **📍 Routing & Navigation**
+
 - Protected route implementation
-
 - Public routes for authentication
-
 - Dynamic route parameters
-
 - Nested routes for complex layouts
-
 - Route-based code splitting
 
-## Authentication
+### **🔐 Authentication**
 
 - User login/logout functionality
-
 - Protected routes with authentication guards
-
 - Profile management
-
 - Session handling
 
-## Image Management
+### **🖼️ Image Management**
 
 - Upload new images
-
 - View uploaded images
-
 - Responsive image gallery
-
 - Image preview
-
 - Lazy loading images
 
-## User Interface
+### **🎨 User Interface**
 
 - Responsive header with navigation
-
 - Profile dropdown/sheet
-
 - Mobile-friendly design
-
 - Dark/Light mode support
-
 - Loading states and transitions
 
-## Performance
+### **⚡ Performance**
 
 - Optimized image loading
-
 - Cached queries with TanStack Query
-
 - Efficient state management
-
 - Route-based code splitting
+
+---
