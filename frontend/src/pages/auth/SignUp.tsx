@@ -16,13 +16,14 @@ import {
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useAuthStep } from "@/context/authStep/useAuthStep";
-import { useAuth } from "@/context/login/useAuth";
+import { useAuth } from "@/context/auth/useAuth";
 import { getValidName } from "@/helper/utils";
 import { signupAPI } from "@/services/auth.api";
 import { queryClient } from "@/services/client";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { toast } from "sonner";
+import { BlurFade } from "@/components/blur-fade";
 
 const FormSchema = z
   .object({
@@ -77,7 +78,7 @@ const SignUp = () => {
   );
 
   return (
-    <div className="space-y-2">
+    <BlurFade delay={0.25 * 0.05} className="space-y-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -155,7 +156,7 @@ const SignUp = () => {
           SignIn
         </Button>
       </p>
-    </div>
+    </BlurFade>
   );
 };
 

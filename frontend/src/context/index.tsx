@@ -3,7 +3,7 @@ import SignModeContext from "./authStep/AuthStepProvider";
 import { DeleteImageProvider } from "./deleteImage/DeleteImageProvider";
 import ViewImageProvider from "./imageView/ImageViewProvider";
 import ImagePreview from "@/components/image/image-preview";
-import AuthProvider from "./login/authProvider";
+import AuthProvider from "./auth/authProvider";
 
 const ContextProviders = ({ children }: { children: React.ReactNode }) => {
   return (

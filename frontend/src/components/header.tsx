@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/login/useAuth";
+import { useAuth } from "@/context/auth/useAuth";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getUserDetails } from "@/services/user.api";
 import { useQuery } from "@tanstack/react-query";

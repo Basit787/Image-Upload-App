@@ -4,7 +4,7 @@ import { useDeleteImageProvider } from "@/context/deleteImage/useDeleteImage";
 import { useViewImageContext } from "@/context/imageView/useImageView";
 import { Download, Trash } from "lucide-react";
 import { memo, useCallback } from "react";
-import { Lens } from "../magicui/lens";
+import { Lens } from "../lens";
 
 const ImagePreview = () => {
   const { modal, onClose } = useViewImageContext();

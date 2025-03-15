@@ -3,6 +3,7 @@ import { queryClient } from "@/services/client";
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type AuthContextType = {
   isToken: boolean;
@@ -22,6 +23,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     mutationFn: () => signOutApi(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["signOut"] });
+      setIsToken(false);
+      Cookies.remove("token");
+      toast("User logout successfully");
     },
   });
 
@@ -30,8 +34,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsToken(true);
   };
   const logout = () => {
-    setIsToken(false);
-    Cookies.remove("token");
     mutate();
   };
 

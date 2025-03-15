@@ -1,4 +1,5 @@
 "use client";
+import { BlurFade } from "@/components/blur-fade";
 import { TextInput } from "@/components/text-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,7 +46,7 @@ const DeleteAccount = () => {
       toast("Account deleted successfully");
     },
     onError: () => {
-      toast.error("Failed to delete account");
+      toast.error("Failed to delete account");  
       form.setError("password", {
         type: "manual",
         message: "Invalid password",
@@ -60,7 +61,7 @@ const DeleteAccount = () => {
     [mutate]
   );
   return (
-    <div className="space-y-4  ">
+    <BlurFade delay={0.25 * 0.05} className="space-y-4  ">
       <p className="text-foreground/50 text-justify">
         <span className="font-bold">Warning:</span> Deleting your account will
         permanently erase all your data and cannot be reversed. Are you sure you
@@ -102,7 +103,7 @@ const DeleteAccount = () => {
           </div>
         </form>
       </Form>
-    </div>
+    </BlurFade>
   );
 };
 

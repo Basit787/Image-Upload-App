@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DeleteAccount from "./profileTabs/deleteAccount";
 import Password from "./profileTabs/password";
 import Profile from "./profileTabs/profile";
+import { BlurFade } from "@/components/blur-fade";
 
 const primarytabs = [
   {
@@ -24,7 +25,7 @@ const primarytabs = [
 
 const ProfileDetails = () => {
   return (
-    <div className="md:px-10 lg:px-20">
+    <BlurFade delay={0.25 * 0.05} className="md:px-10 lg:px-20">
       <h1 className="text-center font-bold text-2xl md:text-4xl pt-3 pb-8">
         Profile Details
       </h1>
@@ -50,7 +51,7 @@ const ProfileDetails = () => {
           ))}
         </Tabs>
       </Card>
-    </div>
+    </BlurFade>
   );
 };
 

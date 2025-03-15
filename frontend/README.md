@@ -1,54 +1,167 @@
-# React + TypeScript + Vite
+# Image Gallery Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application for uploading and managing images with a sleek user interface and real-time updates.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🖼️ Image upload and management
+- 👤 User authentication and profiles
+- 📱 Responsive design (mobile & desktop support)
+- 🎨 Modern UI with Tailwind CSS and shadcn/ui
+- 🔄 Real-time updates with TanStack Query
+- 🎯 Hover cards and mobile-friendly sheets
+- 🏃‍♂️ Fast and efficient image loading
+- 🛣️ Protected route navigation
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend Framework**: React/TypeScript
+- **Routing**:
+  - React Router DOM v6
+  - Protected Routes
+  - Dynamic route handling
+- **Styling**:
+  - Tailwind CSS
+  - shadcn/ui components
+- **State Management & Data Fetching**:
+  - TanStack Query (React Query)
+- **UI Components**:
+  - Lucide Icons
+  - Custom Avatar components
+  - Hover Cards
+  - Sheet components
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js
+- npm or yarn package manager
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Basit787/Image-Upload-App.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Navigate to the project directory:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+cd frontend
 ```
+
+3. Navigate to the project directory:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+---
+
+## Project Structure
+
+src/
+├── components/
+│ ├── header.tsx
+│ ├── image/
+│ │ └── delete-image.tsx
+│ │ └── image-preview.tsx
+│ │ └── image-upload.tsx
+│ └── ui/
+│ ├── avatar.tsx
+│ ├── card.tsx
+│ ├── hover-card.tsx
+│ └── sheet.tsx
+├── context/
+│ └── login/
+│ └── useAuth.tsx
+├── hooks/
+│ └── use-mobile.tsx
+├── routes/
+│ ├── protected-route.tsx
+│ ├── public-route.tsx
+│ └── routes.tsx
+├── pages/
+│ ├── home/
+│ ├── gallery/
+│ ├── profile/
+│ └── auth/
+├── services/
+│ ├── auth.api.ts/
+│ ├── client.ts/
+│ ├── config.ts/
+│ ├── image.api.ts/
+│ ├── profile.api.ts/
+│ └── user.api.ts/
+└── ...
+
+---
+
+## Features in Detail
+
+- Routing & Navigation
+- Protected route implementation
+
+- Public routes for authentication
+
+- Dynamic route parameters
+
+- Nested routes for complex layouts
+
+- Route-based code splitting
+
+## Authentication
+
+- User login/logout functionality
+
+- Protected routes with authentication guards
+
+- Profile management
+
+- Session handling
+
+## Image Management
+
+- Upload new images
+
+- View uploaded images
+
+- Responsive image gallery
+
+- Image preview
+
+- Lazy loading images
+
+## User Interface
+
+- Responsive header with navigation
+
+- Profile dropdown/sheet
+
+- Mobile-friendly design
+
+- Dark/Light mode support
+
+- Loading states and transitions
+
+## Performance
+
+- Optimized image loading
+
+- Cached queries with TanStack Query
+
+- Efficient state management
+
+- Route-based code splitting

@@ -1,3 +1,4 @@
+import { BlurFade } from "@/components/blur-fade";
 import { TextInput } from "@/components/text-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -71,63 +72,65 @@ const Profile = () => {
     [mutate]
   );
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
-                User Name
-              </FormLabel>
-              <FormControl>
-                <TextInput
-                  placeholder="User Name"
-                  {...field}
-                  className="rounded-xl"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <BlurFade delay={0.25 * 0.05}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
+                  User Name
+                </FormLabel>
+                <FormControl>
+                  <TextInput
+                    placeholder="User Name"
+                    {...field}
+                    className="rounded-xl"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
-                Email
-              </FormLabel>
-              <FormControl>
-                <TextInput
-                  placeholder="Email"
-                  {...field}
-                  className="rounded-xl"
-                  readOnly
-                />
-              </FormControl>
-              <FormDescription>
-                Note: You cant update your email
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
+                  Email
+                </FormLabel>
+                <FormControl>
+                  <TextInput
+                    placeholder="Email"
+                    {...field}
+                    className="rounded-xl"
+                    readOnly
+                  />
+                </FormControl>
+                <FormDescription>
+                  Note: You cant update your email
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <div className="flex justify-end pt-4">
-          <Button
-            type="submit"
-            className="h-12 md:text-lg text-base p-4"
-            disabled={isPending}
-          >
-            Update Info
-          </Button>
-        </div>
-      </form>
-    </Form>
+          <div className="flex justify-end pt-4">
+            <Button
+              type="submit"
+              className="h-12 md:text-lg text-base p-4"
+              disabled={isPending}
+            >
+              Update Info
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </BlurFade>
   );
 };
 

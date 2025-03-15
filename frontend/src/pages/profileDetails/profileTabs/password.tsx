@@ -1,3 +1,4 @@
+import { BlurFade } from "@/components/blur-fade";
 import { TextInput } from "@/components/text-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -74,80 +75,82 @@ const Password = () => {
   );
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="currentPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
-                Current Password
-              </FormLabel>
-              <FormControl>
-                <TextInput
-                  type="password"
-                  placeholder="Current Password"
-                  {...field}
-                  className="rounded-xl"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="newPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
-                New Password
-              </FormLabel>
-              <FormControl>
-                <TextInput
-                  type="password"
-                  placeholder="New Password"
-                  {...field}
-                  className="rounded-xl"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="reTypePassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
-                Re-Type New Password
-              </FormLabel>
-              <FormControl>
-                <TextInput
-                  type="password"
-                  placeholder="Re-Type New Password"
-                  {...field}
-                  className="rounded-xl"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <BlurFade delay={0.25 * 0.05}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="currentPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
+                  Current Password
+                </FormLabel>
+                <FormControl>
+                  <TextInput
+                    type="password"
+                    placeholder="Current Password"
+                    {...field}
+                    className="rounded-xl"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="newPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
+                  New Password
+                </FormLabel>
+                <FormControl>
+                  <TextInput
+                    type="password"
+                    placeholder="New Password"
+                    {...field}
+                    className="rounded-xl"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="reTypePassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold md:text-lg text-base text-foreground/50">
+                  Re-Type New Password
+                </FormLabel>
+                <FormControl>
+                  <TextInput
+                    type="password"
+                    placeholder="Re-Type New Password"
+                    {...field}
+                    className="rounded-xl"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <div className="flex justify-end pt-4">
-          <Button
-            type="submit"
-            className="h-12 md:text-lg text-base p-4"
-            disabled={isPending}
-          >
-            Update Password
-          </Button>
-        </div>
-      </form>
-    </Form>
+          <div className="flex justify-end pt-4">
+            <Button
+              type="submit"
+              className="h-12 md:text-lg text-base p-4"
+              disabled={isPending}
+            >
+              Update Password
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </BlurFade>
   );
 };
 

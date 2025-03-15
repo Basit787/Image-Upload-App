@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/login/useAuth";
+import { useAuth } from "@/context/auth/useAuth";
 import { Navigate, Outlet } from "react-router";
 
 const AuthGuard = () => {
