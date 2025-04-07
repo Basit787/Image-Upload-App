@@ -46,7 +46,7 @@ const Header = () => {
         text: "Profile Details",
         icon: User,
         locate: "/profile",
-        onClick: () => navigate("/profile"),
+        onClick: () => navigate("/images/profile"),
       },
     ],
     [

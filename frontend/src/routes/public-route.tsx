@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router";
 const AuthGuard = () => {
   const { isToken } = useAuth();
 
-  return isToken ? <Navigate to="/" replace /> : <Outlet />;
+  return isToken ? <Navigate to="/images" replace /> : <Outlet />;
 };
 
 export default AuthGuard;

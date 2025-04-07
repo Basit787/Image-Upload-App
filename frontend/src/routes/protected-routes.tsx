@@ -9,7 +9,7 @@ const ProtectedRoutes = () => {
     <div>
       <Header />
       <div className="mt-32">
-        {isToken ? <Outlet /> : <Navigate to="/auth" replace />}
+        {isToken ? <Outlet /> : <Navigate to="/" replace />}
       </div>
     </div>
   );

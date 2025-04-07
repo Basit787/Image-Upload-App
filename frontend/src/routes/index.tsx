@@ -22,12 +22,12 @@ const SuspenseWrapper = (
 
 const routes = createBrowserRouter([
   {
-    path: "/auth",
+    path: "/",
     element: <PublicRoutes />,
     children: [{ index: true, element: SuspenseWrapper(AuthRoutes) }],
   },
   {
-    path: "/",
+    path: "/images",
     element: <ProtectedRoutes />,
     errorElement: SuspenseWrapper(ErrorPage),
     children: [
